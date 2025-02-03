@@ -1,8 +1,6 @@
 /* ----------------------------------------------------------------------------
   I2CDriver.cpp - I2C driver for the ATMEL TWI Function
   -----------------------------------------------------------------------------
-  VERSION : 1.0.0
-  -----------------------------------------------------------------------------
   Supported processor: ATmega 328P
   -----------------------------------------------------------------------------
 
@@ -160,9 +158,9 @@ public:
 
 #if I2C_MODE == MODE_MASTER
 	/** Send data to a slave defined by an address */
-	uint8_t sendTo(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop);
+	uint8_t sendTo(uint8_t address, uint8_t* data, uint8_t length);
 	/** Read data from a slave defined by an address */
-	uint8_t readFrom(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop);
+	uint8_t readFrom(uint8_t address, uint8_t* data, uint8_t length);
 #endif
 
 #if I2C_MODE == MODE_SLAVE

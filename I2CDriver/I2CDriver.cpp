@@ -1,8 +1,6 @@
 /* ----------------------------------------------------------------------------
   I2CDriver.cpp - I2C driver for the ATMEL TWI Function
   -----------------------------------------------------------------------------
-  VERSION : 1.0.0
-  -----------------------------------------------------------------------------
   Supported processor: ATmega 328P
   -----------------------------------------------------------------------------
 
@@ -95,7 +93,7 @@ static uint8_t dataPointer;
 static uint8_t *masterReceivedBuffer;
 
 /** Number of data to send */
-static uint8_t nbDataTosend;
+static uint8_t nbDataToSend;
 
 #else
 
@@ -173,12 +171,9 @@ void I2CDriver::disable() {
  * address  : address of a slave
  * data     : Data to send
  * length   : Number of byte to send
- * wait     : time out
- * sendStop : Indicate if stop is needed
  */
 #if I2C_MODE == MODE_MASTER
-uint8_t I2CDriver::sendTo(uint8_t address, uint8_t *data, uint8_t length,
-		uint8_t wait, uint8_t sendStop) {
+uint8_t I2CDriver::sendTo(uint8_t address, uint8_t *data, uint8_t length) {
 	uint8_t i;
 
 	if (driverState == I2C_READY) {
@@ -187,7 +182,7 @@ uint8_t I2CDriver::sendTo(uint8_t address, uint8_t *data, uint8_t length,
 
 		/* Initialize the data buffer */
 		dataPointer = 0;
-		nbDataTosend = length;
+		nbDataToSend = length;
 
 		/* copy data to send in the buffer */
 		i2cAddress = address << 1;
@@ -202,8 +197,14 @@ uint8_t I2CDriver::sendTo(uint8_t address, uint8_t *data, uint8_t length,
 #endif
 
 #if I2C_MODE == MODE_MASTER
-uint8_t I2CDriver::readFrom(uint8_t address, uint8_t *data, uint8_t length,
-		uint8_t wait, uint8_t sendStop) {
+/**
+ * Received data from a slave define by an address.
+ *
+ * address  : address of a slave
+ * data     : Data to send
+ * length   : Number of byte to receive
+ */
+uint8_t I2CDriver::readFrom(uint8_t address, uint8_t *data, uint8_t length) {
 
 	if (driverState == I2C_READY) {
 		uint8_t i;
@@ -213,7 +214,7 @@ uint8_t I2CDriver::readFrom(uint8_t address, uint8_t *data, uint8_t length,
 
 		/* Initialize the data buffer */
 		dataPointer = 0;
-		nbDataTosend = length;
+		nbDataToSend = length;
 		masterReceivedBuffer = data;
 
 		/* copy data to send in the buffer */
@@ -267,7 +268,7 @@ ISR(TWI_vect) {
 	/* ******************************************************************** */
 	case MS_STARTBIT_TRANSMITTED_AND_ACK_RECEIVED_18:
 	case MS_DATA_TRANSMITTED_ACK_RECEIVED_28:
-		if (dataPointer < nbDataTosend) {
+		if (dataPointer < nbDataToSend) {
 			TWDR = i2cBuffer[dataPointer++];
 			REQUEST_SEND_WITH_ACK();
 		} else {
@@ -296,7 +297,7 @@ ISR(TWI_vect) {
 	/* ******************************************************************** */
 	case MR_STARTBIT_TRANSMITED_AND_ACK_RECEIVED_40: // address sent, ack received
 		// ack if more bytes are expected, otherwise nack
-		if (dataPointer < nbDataTosend-1) {
+		if (dataPointer < nbDataToSend-1) {
 			REQUEST_SEND_WITH_ACK();
 		} else {
 			REQUEST_SEND_WITHOUT_ACK();
@@ -305,7 +306,7 @@ ISR(TWI_vect) {
 
 	case MR_DATA_RECEIVED_ACK_RETURN_50: // data received, ack sent
 		masterReceivedBuffer[dataPointer++] = TWDR;
-		if (dataPointer < nbDataTosend-1) {
+		if (dataPointer < nbDataToSend-1) {
 			REQUEST_SEND_WITH_ACK();
 		} else {
 			REQUEST_SEND_WITHOUT_ACK();

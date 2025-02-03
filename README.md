@@ -14,10 +14,10 @@ The driver consists of three files
 - | ------------ | ------------ |
 - | I2CDriver.cpp  | This file is the source code of the driver  |
 - |  I2CDriver.hpp | Header file of the driver  |
-- | I2CDriver.hpp | This file is the configuration file of the driver |
+- | I2CDriver_cfg.hpp | This file is the configuration file of the driver |
 
 ## Configuration of the driver
-For use this driver, you have to modify the I2CDriver.hpp file.
+For use this driver, you have to modify the I2CDriver_cfg.hpp file.
 1. **I2C_MODE** must be define with **MODE_SLAVE** for a slave driver or **MODE_MASTER** for a master driver	
 2. **I2C_SPEED** msut be define with an integer value. The standard value 100000L
 3. **I2C_ADDRESS** (only in case of slave driver) msut be defined with an address value
