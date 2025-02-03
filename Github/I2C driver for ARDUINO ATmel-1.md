@@ -1,3 +1,12 @@
+---
+title: I2C driver for ARDUINO ATmel
+updated: 2025-02-03 09:50:53Z
+created: 2025-02-03 09:13:32Z
+latitude: 49.49437000
+longitude: 0.10792900
+altitude: 0.0000
+---
+
 Ce code est une driver I2C basé sur la cellule 2-wire serial interface of the ATmel microcontroller.
 
 ## Limitiation
@@ -91,7 +100,7 @@ void setSlaveTransmitCallback(uint8_t* (*callBackFunction)(void),uint8_t size);
     Two ARDUINO Nano cards are connected by the I2C bus. The master card periodically sends the status of an LED driven by the slave card. The slave card monitors a switch and sends its status back to the master card which displays this status on an LED.
     
 
-![Freehand Drawing.svg](./_resources/Freehand%20Drawing.svg)
+![Freehand Drawing.svg](../_resources/Freehand%20Drawing-1.svg)
 
 Code of the master.
 
