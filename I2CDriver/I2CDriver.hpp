@@ -21,7 +21,10 @@
   -----------------------------------------------------------------------------
 
   EVOLUTIONS:
-  CREATED: February 2, 2025 by Patrick BRIAND
+  CREATED:   February 2, 2025 by Patrick BRIAND
+  EVOLUTION:
+             February 6, 2025 by Patrick BRIAND
+  	  	  	 -	Add Pullup management
 
 ---------------------------------------------------------------------------- */
 
@@ -66,6 +69,15 @@
 #error I2C_BUFFER_SIZE must be defined
 #elif I2C_BUFFER_SIZE > 128
 #error Size of I2C_BUFFER_SIZE is suspicious
+#endif
+
+/** Check pull up usage */
+#ifndef PULL_UP_USAGE
+#error PULL_UP_USAGE must be defined
+#else
+#if PULL_UP_USAGE != USE_PULL_UP && PULL_UP_USAGE != DONT_USE_PULL_UP
+#error PULL_UP_USAGE must be define with USE_PULL_UP or DONT_USE_PULL_UP
+#endif
 #endif
 
 /**

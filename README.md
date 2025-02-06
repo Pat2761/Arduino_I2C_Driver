@@ -5,9 +5,10 @@ Ce code est une driver I2C basé sur la cellule 2-wire serial interface of the A
 \- Don't manage general messages  
 \- Don't manage repeated start
 
-## versions.
+## version history.
 
 1.0.0 : Initial version
+1.1.0 : Add pullup managment
 
 \# How to use the driver.  
 The driver consists of three files
@@ -24,7 +25,8 @@ For use this driver, you have to modify the I2CDriver_cfg.hpp file.
 1\. \*\*I2C_MODE\*\* must be define with \*\*MODE_SLAVE\*\* for a slave driver or \*\*MODE_MASTER\*\* for a master driver  
 2\. \*\*I2C_SPEED\*\* msut be define with an integer value. The standard value 100000L  
 3\. \*\*I2C_ADDRESS\*\* (only in case of slave driver) msut be defined with an address value  
-4\. \*\*I2C_BUFFER_SIZE\*\* is usede to define the size of the I2C buffer. It must be defined with an integer value.
+4\. \*\*I2C_BUFFER_SIZE\*\* is used to define the size of the I2C buffer. It must be defined with an integer value.
+5\. \*\*PULL_UP_USAGE\*\* is used to define the usage of PULLUP for SCK and SDA wire; Possible valaues are USE_PULL_UP or DONT_USE_PULL_UP
 
 ## Drivers interfaces
 

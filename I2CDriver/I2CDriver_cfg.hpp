@@ -23,7 +23,10 @@
   -----------------------------------------------------------------------------
 
   EVOLUTIONS:
-  CREATED: February 2, 2025 by Patrick BRIAND
+  CREATED:   February 2, 2025 by Patrick BRIAND
+  EVOLUTION:
+             February 6, 2025 by Patrick BRIAND
+  	  	  	 -	Add Pullup management
 
 ---------------------------------------------------------------------------- */
 #ifndef I2CDRIVER_CFG_HPP_
@@ -35,6 +38,11 @@
 #define MODE_MASTER         		1
 /* I2C Slave */
 #define MODE_SLAVE          		0
+/* Use pull up on SDA and SCK pins */
+#define USE_PULL_UP                 1
+/* Don't Use pull up on SDA and SCK pins */
+#define DONT_USE_PULL_UP            0
+
 
 /* I2C_MODE must be defined with MODE_MASTER or MODE_SLAVE */
 #define I2C_MODE 					NOT_DEFINED
@@ -45,6 +53,9 @@
 #if I2C_MODE == MODE_SLAVE
 	#define I2C_ADDRESS  			NOT_DEFINED
 #endif
+
+/* Define if pull up must be use USE_PULL_UP or not use DONT_USE_PULL_UP */
+#define PULL_UP_USAGE				NOT_DEFINED
 
 /* I2C_BUFFER_SIZE must be defined with a value */
 #define I2C_BUFFER_SIZE				NOT_DEFINED

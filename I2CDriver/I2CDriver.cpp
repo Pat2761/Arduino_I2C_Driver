@@ -21,7 +21,10 @@
   -----------------------------------------------------------------------------
 
   EVOLUTIONS:
-  CREATED: February 2, 2025 by Patrick BRIAND
+  CREATED:   February 2, 2025 by Patrick BRIAND
+  EVOLUTION:
+             February 6, 2025 by Patrick BRIAND
+  	  	  	 -	Add Pullup management
 
 ---------------------------------------------------------------------------- */
 
@@ -135,9 +138,12 @@ void I2CDriver::initialisation(void) {
 	// initialize state
 	driverState = I2C_READY;
 
+#if PULL_UP_USAGE == USE_PULL_UP
+	SET_PULLUP_SDA_SCL();
+#endif
+
 #if I2C_MODE == MODE_MASTER
 	// set pull up  on SDA and SCL
-	SET_PULLUP_SDA_SCL();
 
 	// Set I2C prescaler at 1
 	SET_I2C_PRESCALER_1();
